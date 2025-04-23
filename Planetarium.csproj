@@ -1,0 +1,65 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\CartesDuCiel\bayer.json" />
+    <None Remove="Resources\CartesDuCiel\constellations.json" />
+    <None Remove="Resources\CartesDuCiel\heavenly waters.json" />
+    <None Remove="Resources\CartesDuCiel\hercules.json" />
+    <None Remove="Resources\CartesDuCiel\la caille.json" />
+    <None Remove="Resources\CartesDuCiel\orion.json" />
+    <None Remove="Resources\CartesDuCiel\perseus.json" />
+    <None Remove="Resources\CartesDuCiel\zodiac.json" />
+    <None Remove="Resources\Fonts\FORCED SQUARE.ttf" />
+    <None Remove="Resources\Images\sky.jpg" />
+    <None Remove="Resources\Sounds\song.mp3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\CartesDuCiel\bayer.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\CartesDuCiel\constellations.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\CartesDuCiel\heavenly waters.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\CartesDuCiel\hercules.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\CartesDuCiel\la caille.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\CartesDuCiel\orion.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\CartesDuCiel\perseus.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\CartesDuCiel\zodiac.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Fonts\FORCED SQUARE.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\sky.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Sounds\song.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="HelixToolkit.Wpf" Version="2.27.0" />
+  </ItemGroup>
+
+</Project>
