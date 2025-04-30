@@ -11,6 +11,70 @@
             set { _code = value; }
         }
 
+        private string _nomCommun;
+
+        public string NomCommun
+        {
+            get { return _nomCommun; }
+            set { _nomCommun = value; }
+        }
+
+        private double magnitude;
+
+        public double Magnitude
+        {
+            get { return magnitude; }
+            set { magnitude = value; }
+        }
+
+        private double _distance;
+
+        public double Distance
+        {
+            get { return _distance; }
+            set { _distance = value; }
+        }
+
+        private double _index_couleur;
+
+        public double IndexCouleur
+        {
+            get { return _index_couleur; }
+            set { _index_couleur = value; }
+        }
+
+        private double _rayon ;
+
+        public double Rayon
+        {
+            get { return _rayon ; }
+            set { _rayon  = value; }
+        }
+
+        private double _x;
+
+        public double X
+        {
+            get { return _x; }
+            set { _x = value; }
+        }
+
+        private double _y;
+
+        public double Y
+        {
+            get { return _y; }
+            set { _y = value; }
+        }
+
+        private double _z;
+
+        public double Z
+        {
+            get { return _z; }
+            set { _z = value; }
+        }
+
         private Etoile _droite;
 
         public Etoile Droite
@@ -27,47 +91,19 @@
             set { _gauche = value; }
         }
 
-        private int _rayon ;
-
-        public int Rayon
-        {
-            get { return _rayon ; }
-            set { _rayon  = value; }
-        }
-
-        private int _x;
-
-        public int X
-        {
-            get { return _x; }
-            set { _x = value; }
-        }
-
-        private int _y;
-
-        public int Y
-        {
-            get { return _y; }
-            set { _y = value; }
-        }
-
-        private int _z;
-
-        public int Z
-        {
-            get { return _z; }
-            set { _z = value; }
-        }
-
-        public Etoile(string code, Etoile droite, Etoile gauche, int rayon, int x, int y, int z)
+        public Etoile(string code, string nomCommun, double magnitude, double distance, double indexCouleur, double rayon, double x, double y, double z, Etoile droite, Etoile gauche)
         {
             Code = code;
-            Droite = droite;
-            Gauche = gauche;
+            NomCommun = nomCommun;
+            Magnitude = magnitude;
+            Distance = distance;
+            IndexCouleur = indexCouleur;
             Rayon = rayon;
             X = x;
             Y = y;
             Z = z;
+            Droite = droite;
+            Gauche = gauche;
         }
 
         /// <summary>
@@ -76,8 +112,7 @@
         /// <returns>Une chaîne représentant l'étoile'.</returns>
         public override string ToString()
         {
-            throw new NotImplementedException();
+            return $"{Code}";
         }
-
     }
 }

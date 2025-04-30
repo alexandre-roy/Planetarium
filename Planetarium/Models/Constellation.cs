@@ -21,6 +21,22 @@ namespace Planetarium.Models
             set { _nomScientifique = value; }
         }
 
+        private string _nomFrancais;
+
+        public string NomFrancais
+        {
+            get { return _nomFrancais; }
+            set { _nomFrancais = value; }
+        }
+
+        private string _description;
+
+        public string Description
+        {
+            get { return _description; }
+            set { _description = value; }
+        }
+
         private Etoile _racine;
 
         public Etoile Racine
@@ -29,13 +45,14 @@ namespace Planetarium.Models
             set { _racine = value; }
         }
 
-        public Constellation(string code, string nomScientifique, Etoile racine)
+        public Constellation(string code, string nomScientifique, string nomFrancais, string description, Etoile racine)
         {
             Code = code;
             NomScientifique = nomScientifique;
+            NomFrancais = nomFrancais;
+            Description = description;
             Racine = racine;
         }
-
 
         /// <summary>
         /// Insère une étoile dans la constellation en fonction de sa magnitude.
@@ -43,7 +60,7 @@ namespace Planetarium.Models
         /// <param name="etoile">L'étoile à ajouter.</param>
         public void AjouterEtoile(Etoile etoile)
         {
-            throw new NotImplementedException();
+            
         }
 
         /// <summary>
