@@ -16,7 +16,14 @@
         public string NomCommun
         {
             get { return _nomCommun; }
-            set { _nomCommun = value; }
+            set {
+                if (value == "null")
+                {
+                    throw new ExceptionEtoile();
+                }
+
+                _nomCommun = value; 
+            }
         }
 
         private double magnitude;
@@ -112,7 +119,24 @@
         /// <returns>Une chaîne représentant l'étoile'.</returns>
         public override string ToString()
         {
-            return $"{Code}";
+            return $"Code : {Code}\n" +
+                   $"Nom Commun : {NomCommun}\n" +
+                   $"Magnitude : {Magnitude}\n" +
+                   $"Distance : {Distance}\n" +
+                   $"Index de Couleur : {IndexCouleur}\n" +
+                   $"Rayon : {Rayon}\n" +
+                   $"Coordonnées : X = {X}, Y = {Y}, Z = {Z}\n";
+        }
+    }
+
+    public class ExceptionEtoile : Exception
+    {
+        /// <summary>
+        /// Exception perso pour étoile.
+        /// </summary>
+        public ExceptionEtoile() : base($"l’attribut de la classe ne doit pas être la chaîne de caractères \"null\"")
+        {
+
         }
     }
 }

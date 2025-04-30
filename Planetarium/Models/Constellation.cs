@@ -60,7 +60,50 @@ namespace Planetarium.Models
         /// <param name="etoile">L'étoile à ajouter.</param>
         public void AjouterEtoile(Etoile etoile)
         {
-            
+            if (RechercherEtoile(Racine, etoile.Code) != null)
+            {
+                throw new ExceptionConstellation(etoile);
+            }
+
+            if (Racine == null)
+            {
+                Racine = etoile;
+            }
+            else
+            {
+                AjouterRecursif(Racine, etoile);
+            }
+        }
+
+        /// <summary>
+        /// Méthode récursive pour insérer une étoile dans l'arbre binaire.
+        /// </summary>
+        /// <param name="noeudActuel">Le noeud actuel de l'arbre.</param>
+        /// <param name="etoile">L'étoile à insérer.</param>
+        public void AjouterRecursif(Etoile noeudActuel, Etoile etoile)
+        {
+            if (etoile.Magnitude < noeudActuel.Magnitude)
+            {
+                if (noeudActuel.Gauche == null)
+                {
+                    noeudActuel.Gauche = etoile;
+                }
+                else
+                {
+                    AjouterRecursif(noeudActuel.Gauche, etoile);
+                }
+            }
+            else
+            {
+                if (noeudActuel.Droite == null)
+                {
+                    noeudActuel.Droite = etoile;
+                }
+                else
+                {
+                    AjouterRecursif(noeudActuel.Droite, etoile);
+                }
+            }
         }
 
         /// <summary>
@@ -68,7 +111,6 @@ namespace Planetarium.Models
         /// Le parcours s'effectue des enfants vers les parents (du bas vers le haut).
         /// </summary>
         public void SupprimerEtoiles()
-
         {
             throw new NotImplementedException();
         }
@@ -81,7 +123,21 @@ namespace Planetarium.Models
         /// <returns>L'instance de l'étoile si trouvée ; sinon, null.</returns>
         public Etoile RechercherEtoile(Etoile etoile, string code)
         {
-            return null;
+            if (etoile == null)
+            {
+                return null;
+            }
+            if (etoile.Code == code)
+            {
+                return etoile;
+            }
+
+            Etoile etoileTrouvee = RechercherEtoile(etoile.Gauche, code);
+            if (etoileTrouvee != null)
+            {
+                return etoileTrouvee;
+            }
+            return RechercherEtoile(etoile.Droite, code);
         }
 
         /// <summary>
@@ -158,7 +214,29 @@ namespace Planetarium.Models
         /// <returns>Une chaîne représentant la constellation.</returns>
         public override string ToString()
         {
-            throw new NotImplementedException();
+            return $"Code : {Code}\n" +
+                   $"Nom Scientifique : {NomScientifique}\n" +
+                   $"Nom Français : {NomFrancais}\n" +
+                   $"Description : {Description}\n" +
+                   $"Code de l'Étoile Racine : {Racine.Code}\n" +
+                   $"Nombre d'Étoiles : {CompterEtoiles()}\n" +
+                   $"Profondeur : {ObtenirProfondeur()}\n" +
+                   $"Largeur Maximale : {ObtenirLargeurMax()}\n" +
+                   $"Étoile la Plus Brillante : {ObtenirEtoilePlusBrillante()}\n" +
+                   $"Étoile la Plus Lointaine : {ObtenirEtoilePlusLoin()}\n" +
+                   $"Somme des Index de Couleur : {ObtenirSommeIndexCouleur()}\n";
+        }
+    }
+
+    public class ExceptionConstellation : Exception
+    {
+        /// <summary>
+        /// Exception pour constellation.
+        /// </summary>
+        /// <param name="etoile">Étoile qui existe déjà</param>
+        public ExceptionConstellation(Etoile etoile) : base($"L'étoile {etoile.Code} existe déjà dans cette constellation.")
+        {
+
         }
     }
 }

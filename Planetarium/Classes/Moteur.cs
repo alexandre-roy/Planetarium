@@ -17,7 +17,7 @@ namespace Planetarium.Classes
 {
     internal class Moteur
     {
-        private static Dictionary<string, Constellation> _dicoConstellations = new Dictionary<string, Constellation>();
+        public static Dictionary<string, Constellation> _dicoConstellations = new Dictionary<string, Constellation>();
 
         /// <summary>
         /// Ouvre une boîte de dialogue pour sélectionner un fichier JSON représentant une carte du ciel.
@@ -38,8 +38,8 @@ namespace Planetarium.Classes
             {
                 Constellation constellation = new Constellation(
                     constellationE.GetProperty("code").GetString(),
-                    constellationE.GetProperty("nom_Scientifique").GetString(),
-                    constellationE.GetProperty("nom_Francais").GetString(),
+                    constellationE.GetProperty("nom_scientifique").GetString(),
+                    constellationE.GetProperty("nom_francais").GetString(),
                     constellationE.GetProperty("description").GetString(),
                     null
                 );

@@ -54,12 +54,11 @@ namespace Planetarium
             // Sur chaque itération, appeler les méthodes suivantes définies ci-bas (attention, vous ne pouvez pas les modifier):
             // - CreerEtoiles
             // - AjouterListeConstellations
-
-
-
-
-
-
+            foreach (Constellation constellation in Moteur._dicoConstellations.Values)
+            {
+                CreerEtoiles(constellation.Racine, constellation.Code);
+                AjouterListeConstellations(constellation);
+            }
             // Fin du TODO.
 
             if (Moteur.CompterConstellations() > 0)
