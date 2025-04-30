@@ -9,10 +9,10 @@ namespace PlanetariumTests
         public void Attribut_De_Classe_Ne_Doit_Pas_Etre_Null_String()
         {
             // ARRANGE
+            Etoile etoile = new Etoile("E1", "Etoile 1", 1.0, 10.0, 0.5, 1.0, 0.0, 0.0, 0.0, null, null);
 
-            // ACT
-
-            // ASSERT
+            // ACT & ASSERT
+            Assert.Throws<ExceptionEtoile>(() => etoile.NomCommun = "null");
         }
     }
 }
