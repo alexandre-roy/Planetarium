@@ -143,10 +143,20 @@ namespace Planetarium.Models
         /// <summary>
         /// Compte et retourne le nombre total d'étoiles dans la constellation.
         /// </summary>
+        /// <param name="etoile">L'étoile racine à partir de laquelle compter.</param>
         /// <returns>Le nombre d'étoiles dans la constellation.</returns>
-        public int CompterEtoiles()
+        public int CompterEtoiles(Etoile etoile)
         {
-            throw new NotImplementedException();
+            if (etoile == null)
+            {
+                return 0;
+            }
+
+            int nombreEtoilesGauche = CompterEtoiles(etoile.Gauche);
+
+            int nombreEtoilesDroite = CompterEtoiles(etoile.Droite);
+
+            return 1 + nombreEtoilesGauche + nombreEtoilesDroite;
         }
 
         /// <summary>
@@ -172,10 +182,31 @@ namespace Planetarium.Models
         /// Retourne l'étoile la plus brillante de la constellation,
         /// basée sur la valeur de la magnitude.
         /// </summary>
-        /// <returns>L'étoile avec la plus faible magnitude (plus brillante).</returns>
-        public Etoile ObtenirEtoilePlusBrillante()
+        /// <param name="etoile">L'étoile racine à partir de laquelle chercher.</param>
+        /// <returns>L'étoile avec la plus grosse magnitude (plus brillante).</returns>
+        public Etoile ObtenirEtoilePlusBrillante(Etoile etoile)
         {
-            throw new NotImplementedException();
+            if (etoile == null)
+            {
+                return null;
+            }
+
+            Etoile etoileGauche = ObtenirEtoilePlusBrillante(etoile.Gauche);
+            Etoile etoileDroite = ObtenirEtoilePlusBrillante(etoile.Droite);
+
+            Etoile etoilePlusBrillante = etoile;
+
+            if (etoileGauche != null && etoileGauche.Magnitude > etoilePlusBrillante.Magnitude)
+            {
+                etoilePlusBrillante = etoileGauche;
+            }
+
+            if (etoileDroite != null && etoileDroite.Magnitude > etoilePlusBrillante.Magnitude)
+            {
+                etoilePlusBrillante = etoileDroite;
+            }
+
+            return etoilePlusBrillante;
         }
 
         /// <summary>
@@ -219,12 +250,13 @@ namespace Planetarium.Models
                    $"Nom Français : {NomFrancais}\n" +
                    $"Description : {Description}\n" +
                    $"Code de l'Étoile Racine : {Racine.Code}\n" +
-                   $"Nombre d'Étoiles : {CompterEtoiles()}\n" +
-                   $"Profondeur : {ObtenirProfondeur()}\n" +
-                   $"Largeur Maximale : {ObtenirLargeurMax()}\n" +
-                   $"Étoile la Plus Brillante : {ObtenirEtoilePlusBrillante()}\n" +
-                   $"Étoile la Plus Lointaine : {ObtenirEtoilePlusLoin()}\n" +
-                   $"Somme des Index de Couleur : {ObtenirSommeIndexCouleur()}\n";
+                   $"Nombre d'Étoiles : {CompterEtoiles(Racine)}\n" +
+                   //$"Profondeur : {ObtenirProfondeur()}\n" +
+                   //$"Largeur Maximale : {ObtenirLargeurMax()}\n" +
+                   $"Étoile la Plus Brillante : {ObtenirEtoilePlusBrillante(Racine).Code}\n"
+                   //$"Étoile la Plus Lointaine : {ObtenirEtoilePlusLoin()}\n" +
+                   //$"Somme des Index de Couleur : {ObtenirSommeIndexCouleur()}\n"
+                   ;
         }
     }
 
