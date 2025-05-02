@@ -75,7 +75,7 @@ namespace Planetarium.Classes
         {
             foreach (Constellation constellation in _dicoConstellations.Values)
             {
-                constellation.SupprimerEtoiles();
+                constellation.SupprimerEtoiles(constellation.Racine);
             }
 
             _dicoConstellations.Clear();

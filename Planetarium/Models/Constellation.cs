@@ -110,9 +110,24 @@ namespace Planetarium.Models
         /// Supprime toutes les étoiles de la constellation.
         /// Le parcours s'effectue des enfants vers les parents (du bas vers le haut).
         /// </summary>
-        public void SupprimerEtoiles()
+        /// <param name="etoile">La racine de la constelltion</param>
+        public void SupprimerEtoiles(Etoile etoile)
         {
-            throw new NotImplementedException();
+            if (etoile == Racine)
+            {
+                Racine = null;
+            }
+
+            if (etoile == null)
+            {
+                return;
+            }
+
+            SupprimerEtoiles(etoile.Gauche);
+            SupprimerEtoiles(etoile.Droite);
+
+            etoile.Gauche = null;
+            etoile.Droite = null;
         }
 
         /// <summary>
@@ -213,19 +228,49 @@ namespace Planetarium.Models
         /// Retourne l'étoile la plus éloignée de la Terre,
         /// basée sur la distance.
         /// </summary>
+        /// <param name="etoile">L'étoile racine à partir de laquelle chercher.</param>
         /// <returns>L'étoile la plus lointaine.</returns>
-        public Etoile ObtenirEtoilePlusLoin()
+        public Etoile ObtenirEtoilePlusLoin(Etoile etoile)
         {
-            throw new NotImplementedException();
+            if (etoile == null)
+            {
+                return null;
+            }
+
+            Etoile etoileGauche = ObtenirEtoilePlusLoin(etoile.Gauche);
+            Etoile etoileDroite = ObtenirEtoilePlusLoin(etoile.Droite);
+
+            Etoile etoilePlusLoin = etoile;
+
+            if (etoileGauche != null && etoileGauche.Distance > etoilePlusLoin.Distance)
+            {
+                etoilePlusLoin = etoileGauche;
+            }
+
+            if (etoileDroite != null && etoileDroite.Distance > etoilePlusLoin.Distance)
+            {
+                etoilePlusLoin = etoileDroite;
+            }
+
+            return etoilePlusLoin;
         }
 
         /// <summary>
         /// Calcule la somme des index de couleur de toutes les étoiles de la constellation.
         /// </summary>
+        /// <param name="etoile">L'étoile racine à partir de laquelle chercher.</param>
         /// <returns>La somme des index de couleur.</returns>
-        public double ObtenirSommeIndexCouleur()
+        public double ObtenirSommeIndexCouleur(Etoile etoile)
         {
-            throw new NotImplementedException();
+            if (etoile == null)
+            {
+                return 0;
+            }
+
+            double sommeGauche = ObtenirSommeIndexCouleur(etoile.Gauche);
+            double sommeDroite = ObtenirSommeIndexCouleur(etoile.Droite);
+
+            return etoile.IndexCouleur + sommeGauche + sommeDroite;
         }
 
         /// <summary>
@@ -253,10 +298,9 @@ namespace Planetarium.Models
                    $"Nombre d'Étoiles : {CompterEtoiles(Racine)}\n" +
                    //$"Profondeur : {ObtenirProfondeur()}\n" +
                    //$"Largeur Maximale : {ObtenirLargeurMax()}\n" +
-                   $"Étoile la Plus Brillante : {ObtenirEtoilePlusBrillante(Racine).Code}\n"
-                   //$"Étoile la Plus Lointaine : {ObtenirEtoilePlusLoin()}\n" +
-                   //$"Somme des Index de Couleur : {ObtenirSommeIndexCouleur()}\n"
-                   ;
+                   $"Étoile la Plus Brillante : {ObtenirEtoilePlusBrillante(Racine).Code}\n" +
+                   $"Étoile la Plus Lointaine : {ObtenirEtoilePlusLoin(Racine).Code}\n" +
+                   $"Somme des Index de Couleur : {ObtenirSommeIndexCouleur(Racine)}\n";
         }
     }
 
