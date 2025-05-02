@@ -26,6 +26,8 @@ namespace Planetarium.Classes
         /// </summary>
         public static void ChargerFichier()
         {
+            Moteur.DechargerFichier();
+
             string cheminFichier = Utils.OuvrirFichierJSON();
 
             string contenuFichier = File.ReadAllText(cheminFichier);

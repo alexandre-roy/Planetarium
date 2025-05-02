@@ -119,6 +119,10 @@
         /// <returns>Une chaîne représentant l'étoile'.</returns>
         public override string ToString()
         {
+            if (NomCommun == null)
+            {
+                NomCommun = "─";
+            } 
             return $"Code : {Code}\n" +
                    $"Nom Commun : {NomCommun}\n" +
                    $"Magnitude : {Magnitude}\n" +

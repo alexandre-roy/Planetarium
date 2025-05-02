@@ -148,6 +148,7 @@ namespace Planetarium.Models
             }
 
             Etoile etoileTrouvee = RechercherEtoile(etoile.Gauche, code);
+
             if (etoileTrouvee != null)
             {
                 return etoileTrouvee;
@@ -168,7 +169,6 @@ namespace Planetarium.Models
             }
 
             int nombreEtoilesGauche = CompterEtoiles(etoile.Gauche);
-
             int nombreEtoilesDroite = CompterEtoiles(etoile.Droite);
 
             return 1 + nombreEtoilesGauche + nombreEtoilesDroite;
@@ -177,20 +177,60 @@ namespace Planetarium.Models
         /// <summary>
         /// Retourne la profondeur maximale de l'arborescence de la constellation.
         /// </summary>
+        /// <param name="etoile">La racine de la constellation.</param>
         /// <returns>La profondeur de la constellation.</returns>
-        public int ObtenirProfondeur()
+        public int ObtenirProfondeur(Etoile etoile)
         {
-            throw new NotImplementedException();
+            if (etoile == null)
+            {
+                return 0;
+            }
+
+            int profondeurGauche = ObtenirProfondeur(etoile.Gauche);
+            int profondeurDroite = ObtenirProfondeur(etoile.Droite);
+
+            return 1 + Math.Max(profondeurGauche, profondeurDroite);
         }
 
         /// <summary>
         /// Calcule et retourne la largeur maximale de la constellation,
         /// c’est-à-dire le nombre maximum d’étoiles à un même niveau.
         /// </summary>
+        /// <param name="etoile">La racine de la constellation.</param>
         /// <returns>La largeur maximale de la constellation.</returns>
-        public int ObtenirLargeurMax()
+        public int ObtenirLargeurMax(Etoile etoile)
         {
-            throw new NotImplementedException();
+            if (etoile == null)
+            {
+                return 0;
+            }
+
+            int profondeur = ObtenirProfondeur(etoile);
+
+            int[] largeurs = new int[profondeur];
+
+            return ObtenirLargeurMaxRecursif(etoile, 0, largeurs);
+        }
+
+        /// <summary>
+        /// Méthode récursive pour obtenir la largeur maximale.
+        /// </summary>
+        /// <param name="noeudActuel">Le noeud actuel de l'arbre.</param>
+        /// <param name="niveau">Le niveau actuel de l'arbre.</param>
+        /// <param name="largeurs">Le tableau contenant les largeurs à chaque niveau.</param>
+        public int ObtenirLargeurMaxRecursif(Etoile noeudActuel, int niveau, int[] largeurs)
+        {
+            if (noeudActuel == null)
+            {
+                return 0;
+            }
+
+            largeurs[niveau]++;
+
+            ObtenirLargeurMaxRecursif(noeudActuel.Gauche, niveau + 1, largeurs);
+            ObtenirLargeurMaxRecursif(noeudActuel.Droite, niveau + 1, largeurs);
+
+            return largeurs.Max();
         }
 
         /// <summary>
@@ -279,9 +319,20 @@ namespace Planetarium.Models
         /// </summary>
         /// <param name="etoile">L'étoile racine à partir de laquelle générer la représentation.</param>
         /// <returns>Une chaîne de caractères représentant l'arborescence de la constellation.</returns>
-        public string AfficherVisuelConstellation(Etoile etoile)
+        public string AfficherVisuelConstellation(Etoile etoile, int niveau = 0, string gd = "")
         {
-            return "";
+            if (etoile == null)
+            {
+                return string.Empty;
+            }
+
+            string indentation = new string(' ', niveau * 4);
+            string arbre = $"{indentation}{gd}{etoile.Code}\n";
+
+            arbre += AfficherVisuelConstellation(etoile.Gauche, niveau + 1, " └─ G ");
+            arbre += AfficherVisuelConstellation(etoile.Droite, niveau + 1, " └─ D ");
+
+            return arbre;
         }
 
         /// <summary>
@@ -293,11 +344,11 @@ namespace Planetarium.Models
             return $"Code : {Code}\n" +
                    $"Nom Scientifique : {NomScientifique}\n" +
                    $"Nom Français : {NomFrancais}\n" +
-                   $"Description : {Description}\n" +
-                   $"Code de l'Étoile Racine : {Racine.Code}\n" +
+                   $"Description : {Description}\n\n" +
+                   $"Étoile maître : {Racine.Code}\n" +
                    $"Nombre d'Étoiles : {CompterEtoiles(Racine)}\n" +
-                   //$"Profondeur : {ObtenirProfondeur()}\n" +
-                   //$"Largeur Maximale : {ObtenirLargeurMax()}\n" +
+                   $"Profondeur : {ObtenirProfondeur(Racine)}\n" +
+                   $"Largeur Maximale : {ObtenirLargeurMax(Racine)}\n" +
                    $"Étoile la Plus Brillante : {ObtenirEtoilePlusBrillante(Racine).Code}\n" +
                    $"Étoile la Plus Lointaine : {ObtenirEtoilePlusLoin(Racine).Code}\n" +
                    $"Somme des Index de Couleur : {ObtenirSommeIndexCouleur(Racine)}\n";
