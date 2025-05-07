@@ -29,6 +29,7 @@ namespace Planetarium
 
             foreach (GeometryModel3D geometry in _etoilesSelectionnees)
                 geometry.Material = MaterialHelper.CreateMaterial(Resources["Couleur"] as Brush) as MaterialGroup;
+            Journalisation.Tracer($"Couleur sélectionnée : {Resources["Couleur"]}.");
         }
 
         private void Musique_PreviewMouseDown(object pSender, MouseButtonEventArgs pEvent)
@@ -37,11 +38,13 @@ namespace Planetarium
             {
                 mediaAmbiance.Play();
                 lblMusique.Content = "𝄽";
+                Journalisation.Tracer("Musique d'ambiance commencée.");
             }
             else
             {
                 mediaAmbiance.Stop();
                 lblMusique.Content = "𝅘𝅥";
+                Journalisation.Tracer("Musique d'ambiance arrêtée.");
             }
         }
 
@@ -138,6 +141,7 @@ namespace Planetarium
 
                 txtboxListeConstellations.Text = $"▼ {constellationCourante.NomScientifique}";
                 txtblockInfoConstellation.Text = constellationCourante.ToString();
+                Journalisation.Tracer($"\n\nConstellation sélectionnée: \n{txtblockInfoConstellation.Text}");
                 txtblockVisuelConstellation.Text = constellationCourante.AfficherVisuelConstellation(constellationCourante.Racine);
 
                 viewportGalaxie.CameraController.CameraTarget = new Point3D(constellationCourante.Racine.X, constellationCourante.Racine.Y, constellationCourante.Racine.Z);

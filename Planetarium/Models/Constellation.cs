@@ -1,4 +1,7 @@
 ﻿using System.Text;
+using System.Windows;
+using Planetarium.Classes;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Planetarium.Models
 {
@@ -60,10 +63,20 @@ namespace Planetarium.Models
         /// <param name="etoile">L'étoile à ajouter.</param>
         public void AjouterEtoile(Etoile etoile)
         {
-            if (RechercherEtoile(Racine, etoile.Code) != null)
+            try
             {
-                throw new ExceptionConstellation(etoile);
+                if (RechercherEtoile(Racine, etoile.Code) != null)
+                {
+                    throw new ExceptionConstellation(etoile, Code);
+                }
             }
+            catch (ExceptionConstellation e)
+            {
+                Journalisation.Tracer("ERREUR - " + e.Message);
+                MessageBox.Show(e.Message, "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                throw;
+            }
+
 
             if (Racine == null)
             {
@@ -361,7 +374,8 @@ namespace Planetarium.Models
         /// Exception pour constellation.
         /// </summary>
         /// <param name="etoile">Étoile qui existe déjà</param>
-        public ExceptionConstellation(Etoile etoile) : base($"L'étoile {etoile.Code} existe déjà dans cette constellation.")
+        /// <param name="code">Code de la constellation</param>
+        public ExceptionConstellation(Etoile etoile, string code) : base($"L'étoile {etoile.Code} existe déjà dans la constellation {code}.")
         {
 
         }

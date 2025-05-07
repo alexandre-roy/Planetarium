@@ -1,4 +1,7 @@
-﻿namespace Planetarium.Models
+﻿using System.Windows;
+using Planetarium.Classes;
+
+namespace Planetarium.Models
 {
     ////TODO : Compléter la classe Etoile avec ces attributs, propriétés, constructeur et méthodes
     public class Etoile
@@ -17,9 +20,18 @@
         {
             get { return _nomCommun; }
             set {
-                if (value == "null")
+                try
                 {
-                    throw new ExceptionEtoile();
+                    if (value == "null")
+                    {
+                        throw new ExceptionEtoile();
+                    }
+                }
+                catch(ExceptionEtoile e)
+                {
+                    Journalisation.Tracer("ERREUR - " + e.Message);
+                    MessageBox.Show(e.Message, "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                    throw;
                 }
 
                 _nomCommun = value; 

@@ -12,6 +12,7 @@ using System.Text.Json;
 using Microsoft.Win32;
 using System.IO;
 using System.Globalization;
+using System.Diagnostics;
 
 namespace Planetarium.Classes
 {
@@ -67,6 +68,7 @@ namespace Planetarium.Classes
 
                 _dicoConstellations.Add(constellation.Code, constellation);
             }
+            Journalisation.Tracer("Fichier JSON chargé avec succès.");
         }   
 
         /// <summary>
@@ -81,6 +83,7 @@ namespace Planetarium.Classes
             }
 
             _dicoConstellations.Clear();
+            Journalisation.Tracer("Fichier JSON déchargé avec succès.");
         }
 
         /// <summary>
@@ -91,6 +94,7 @@ namespace Planetarium.Classes
         public static int CompterConstellations()
         {
             return _dicoConstellations.Count;
+            Trace.WriteLine($"Nombre de constellations : {_dicoConstellations.Count}");
         }
 
         /// <summary>
